@@ -1,4 +1,4 @@
-import {writeFileSync,readFileSync} from "fs"
+import {writeFileSync,readFileSync,appendFileSync} from "fs"
 /** 构造树
  * @param {string} loadFile 相对运行文件路径
  * @param {string} saveFile 相对运行文件路径
@@ -124,7 +124,7 @@ function cssToJson(loadFile, saveFile) {
  * @param {string} scssPath 相对运行文件路径
  */
 function JsonToScss(loadFile, scssPath) {
-    const cssJson = require(loadFile)
+    const cssJson = JSON.parse(readFileSync(loadFile))
     writeFileSync(scssPath, '');
     for (const item of cssJson) {
         appendFileSync(scssPath, `${item.class}{\n`)

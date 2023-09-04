@@ -1,5 +1,5 @@
 
-import {readFileSync,writeFileSync} from 'fs'
+import {readFileSync,writeFileSync,appendFileSync} from 'fs'
 const cssFile="./test/indexPerformance-new.css"
 const newCssFile="./test/new.css"
 /**
@@ -8,8 +8,8 @@ const newCssFile="./test/new.css"
  * @param {string} newCssFile 新的css文件路径
  */
 function optimzizeCss(cssFile,newCssFile){
-    fs.writeFileSync(newCssFile,"")
-    const cssData=fs.readFileSync(cssFile,"utf-8")
+   writeFileSync(newCssFile,"")
+    const cssData=readFileSync(cssFile,"utf-8")
     const mediaRegex = /^@media[\s\S]+?\{([^}]+\{[^\}]+\})+[^\}]*\}/gmis
     const mediaTitleRegex = /^@media[\s\S]+?(?=\{)/g
     const mediaContentRegex = /(\.|\#)[^\{]+?\{[^\}]+?\}/gmis;
@@ -35,11 +35,11 @@ function optimzizeCss(cssFile,newCssFile){
         this.content=[]
     }
     const otherData=cssData.replace(mediaRegex,"").replace(/[\n]+/g,"\n").replace(exegesisRegex2,"")
-    fs.appendFileSync(newCssFile,otherData)
+   appendFileSync(newCssFile,otherData)
     for(const item of mediaTree){
-        fs.appendFileSync(newCssFile,`${item.media}{\n`)
-        fs.appendFileSync(newCssFile,`${item.content.join("")}\n`)
-        fs.appendFileSync(newCssFile,`}\n`)
+       appendFileSync(newCssFile,`${item.media}{\n`)
+       appendFileSync(newCssFile,`${item.content.join("")}\n`)
+       appendFileSync(newCssFile,`}\n`)
     }
     
 }
